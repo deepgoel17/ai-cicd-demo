@@ -1,3 +1,13 @@
 steps:
 - name: 'bash'
-  args: ['./publishIntegration.bash']
+  script: |
+    #!/usr/bin/env bash
+    echo "Hello World"
+    echo "Hello World"
+    echo "Hello World"
+- name: 'ubuntu'
+  script: echo hello
+- name: 'python'
+  script: |
+    #!/usr/bin/env python
+    print('hello from python')
