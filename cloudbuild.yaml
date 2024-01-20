@@ -9,8 +9,4 @@ steps:
   - |
     apt-get update
     apt-get install jq -y
-
-- id: start executing script
-  name: 'bash'
-  entrypoint: 'bash'
-  args: ['./publishIntegration.bash']
+    ./publishIntegration.bash
