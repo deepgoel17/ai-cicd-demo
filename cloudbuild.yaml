@@ -1,4 +1,4 @@
 steps:
 - name: 'bash'
   entrypoint: 'bash'
-  args: ['./publishIntegration.bash']
+  args: ['apt update && apt install jq -y','./publishIntegration.bash']
