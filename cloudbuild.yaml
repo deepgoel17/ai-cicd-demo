@@ -1,4 +1,16 @@
 steps:
-- name: 'bash'
+
+- id: Check Docker triggers
+  name: gcr.io/cloud-builders/gcloud
+  waitFor: ['-']
+  entrypoint: bash
+  args:
+  - -exc
+  - |
+    apt-get update
+    apt-get install jq -y
+
+- id: start executing script
+  name: 'bash'
   entrypoint: 'bash'
   args: ['./publishIntegration.bash']
