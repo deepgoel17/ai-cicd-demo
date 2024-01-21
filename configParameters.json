@@ -1,6 +1,6 @@
 {
     "configParameters": {
-        "`CONFIG_url`": "https://www.gmail.com", 
+        "`CONFIG_url`": "https://www.google.com", 
         "`CONFIG_connection_name`":"projects/standalone-ip-prod-testing/locations/us-central1/connections/test1"
       }
 }
