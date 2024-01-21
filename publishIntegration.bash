@@ -12,9 +12,11 @@ downloadResponse=$(curl -v -X GET -H "Content-Type: application/json" "$urlUsEas
 
 echo "$downloadResponse" > integration.json 
 
-uploadResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$uploadURI:upload" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d @integration.json)
+uploadResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$uploadURI:upload" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d "$downloadResponse")
 
 versionNumberUpload=$(echo "$uploadResponse" | jq ".integrationVersion.name" | cut -d'/' -f8 | cut -d '"' -f1)
+
+echo "$versionNumberUpload"
 
 publishResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$publishURI/$versionNumberUpload:publish" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d @configParameters.json)
 
