@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 
-echo '{"person":{"name":"John", "age":30, "city":"New York"}}' | jq '.person.name'
-# urlUsCentral1="https://stagingqualuscentral1-integrations-googleapis.sandbox.google.com/v1"
-# publishURI="projects/standalone-ip-prod-testing/locations/us-central1/integrations/deep-connector-demo-config/versions/$1"
+urlUsCentral1="https://stagingqualuscentral1-integrations-googleapis.sandbox.google.com/v1"
+urlUsEast1="https://stagingqualuseast1-integrations-googleapis.sandbox.google.com/v1"
 
-#  curl -v -X GET -H "Content-Type: application/json" "$urlUsCentral1/$publishURI:downloadJsonPackage?files=INTEGRATION" -H "Authorization: Bearer $(gcloud auth print-access-token)";
+downloadURI="projects/standalone-ip-staging-testing/locations/us-east1/integrations/cicd-demo/versions/$1"
+uploadURI="projects/standalone-ip-prod-testing/locations/us-central1/integrations/cicd-demo-prod/versions"
+publishURI="projects/standalone-ip-prod-testing/locations/us-central1/integrations/cicd-demo-prod/versions"
+
+
+downloadResponse=$(curl -v -X GET -H "Content-Type: application/json" "$urlUsEast1/$downloadURI:download?fileFormat=JSON" -H "Authorization: Bearer $(gcloud auth print-access-token)")
+
+echo "$downloadResponse" > integration.json 
+
+uploadResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$uploadURI:upload" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d @integration.json)
+
+versionNumberUpload=$(echo "$uploadResponse" | jq ".integrationVersion.name" | cut -d'/' -f8 | cut -d '"' -f1)
+
+publishResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$publishURI/$versionNumberUpload:publish" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d @configParameters.json)
+
+echo "$publishResponse"

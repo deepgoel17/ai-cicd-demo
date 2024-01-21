@@ -9,4 +9,4 @@ steps:
   - |
     apt-get update
     apt-get install jq -y
-    ./publishIntegration.bash
+    ./publishIntegration.bash 1a6b8f27-3ec0-4ad2-827b-6e1fa2e21d06
