@@ -14,7 +14,9 @@ echo "$downloadResponse"
 
 echo "$downloadResponse" > integration.json 
 
-uploadResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$uploadURI:upload" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d @integration.json)
+uploadResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$uploadURI:upload" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d "$downloadResponse")
+
+echo "$uploadResponse"
 
 versionNumberUpload=$(echo "$uploadResponse" | jq ".integrationVersion.name" | cut -d'/' -f8 | cut -d '"' -f1)
 
