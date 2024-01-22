@@ -10,8 +10,6 @@ publishURI="projects/standalone-ip-prod-testing/locations/us-central1/integratio
 
 downloadResponse=$(curl -v -X GET -H "Content-Type: application/json" "$urlUsEast1/$downloadURI:download?fileFormat=JSON" -H "Authorization: Bearer $(gcloud auth print-access-token)")
 
-echo "$downloadResponse"
-
 echo "$downloadResponse" > integration.json 
 
 uploadResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$uploadURI:upload" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d "$downloadResponse")
