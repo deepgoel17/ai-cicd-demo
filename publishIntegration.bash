@@ -20,6 +20,6 @@ versionNumberUpload=$(echo "$uploadResponse" | jq ".integrationVersion.name" | c
 
 echo "$versionNumberUpload"
 
-publishResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$publishURI/$versionNumberUpload:publish" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d @configParameters.json)
+publishResponse=$(curl -v -X POST -H "Content-Type: application/json" "$urlUsCentral1/$publishURI/$versionNumberUpload:publish" -H "Authorization: Bearer $(gcloud auth print-access-token)" -d {"configParameters": @cicd-demo-v2-config.json})
 
 echo "$publishResponse"
